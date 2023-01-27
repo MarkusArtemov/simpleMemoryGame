@@ -14,9 +14,10 @@ body{
 }
 
 .card{
-    border: 1px solid rgb(207, 204, 204);
     background-size: cover;
+    filter: brightness(0%);
 }
+
 
 
 
