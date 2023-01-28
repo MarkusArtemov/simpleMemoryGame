@@ -17,19 +17,25 @@ let numberOfOpenCards = 0;
 
 function startGame(){
 for (let i = 0; i < cards.length; i++) {
-    cards[i].style.backgroundImage = "url(" + shuffledImages[i] + ")";
-    cards[i].classList.add("card-overlay");
    setupCards(i);
 }
 }
 startGame();
 
 function setupCards(cardIndex){
+     cards[cardIndex].style.backgroundImage = "url(" + shuffledImages[cardIndex] + ")";
+    cards[cardIndex].classList.add("card-overlay");
       cards[cardIndex].addEventListener("click", function() {
         if(numberOfOpenCards == 2){
             hideCards();
         } 
-        openCard(cards[cardIndex]);
+
+        if(openCards.length === 1 && openCard[0] === cards[cardIndex]){
+
+        } else{
+            openCard(cards[cardIndex]);
+        }
+        
     });
 }
 
@@ -46,8 +52,10 @@ function hideCards () {
         removeSameCards();
         if(firstPlayerTurn){
             firstPlayerPoints++;
+            document.querySelector(".firstplayerScore").textContent = "Spieler 1 : "+firstPlayerPoints+ " Punkte";
         } else{
             secondPlayerPoints++;
+            document.querySelector(".secondplayerScore").textContent = "Spieler 2 : "+secondPlayerPoints+ " Punkte";
         }
     } else {
          for(let i = 0; i < cards.length; i++){
@@ -62,20 +70,24 @@ function hideCards () {
 
 function changeTurn(){
     firstPlayerTurn = !firstPlayerTurn;
+    if(firstPlayerTurn)document.querySelector("h1").textContent = 'Zug von Spieler 1';
+    else document.querySelector("h1").textContent = 'Zug von Spieler 2';
 }
 
 
+
 function gameOverMessage(){
-    if(firstPlayerPoints > secondPlayerPoints) alert("firstplayer wins");
-    else if(firstPlayerPoints < secondPlayerPoints) alert("secondplayer wins");
-    else alert("draw");
+    if(firstPlayerPoints > secondPlayerPoints) document.querySelector("h1").textContent = 'Spieler 1 hat gewonnen';
+    else if(firstPlayerPoints < secondPlayerPoints) document.querySelector("h1").textContent = 'Spieler 2 hat gewonnen';
+    else document.querySelector("h1").textContent = 'Unentschieden';;
 }
 
 
 
 
 function checkSamePictures(openCards){
-    return (openCards[0].style.backgroundImage === openCards[1].style.backgroundImage);
+    return ((openCards[0].style.backgroundImage === openCards[1].style.backgroundImage) && 
+    openCards [0] != openCards[1]);
 }
 
 function removeOpenCards(){
