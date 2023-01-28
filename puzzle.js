@@ -24,18 +24,12 @@ startGame();
 
 function setupCards(cardIndex){
      cards[cardIndex].style.backgroundImage = "url(" + shuffledImages[cardIndex] + ")";
-    cards[cardIndex].classList.add("card-overlay");
+     cards[cardIndex].classList.add("card-overlay");
       cards[cardIndex].addEventListener("click", function() {
         if(numberOfOpenCards == 2){
             hideCards();
-        } 
-
-        if(openCards.length === 1 && openCard[0] === cards[cardIndex]){
-
-        } else{
-            openCard(cards[cardIndex]);
-        }
-        
+        }  
+            openCard(cards[cardIndex]);    
     });
 }
 
@@ -58,12 +52,13 @@ function hideCards () {
             document.querySelector(".secondplayerScore").textContent = "Spieler 2 : "+secondPlayerPoints+ " Punkte";
         }
     } else {
+        changeTurn();
          for(let i = 0; i < cards.length; i++){
             cards[i].style.filter = "brightness(0%)";
+            
         }
     }
-    removeOpenCards();
-    changeTurn();
+    removeCardsFromArray();
     if((firstPlayerPoints+secondPlayerPoints===8)) {gameOverMessage()};
 }
 
@@ -90,7 +85,7 @@ function checkSamePictures(openCards){
     openCards [0] != openCards[1]);
 }
 
-function removeOpenCards(){
+function removeCardsFromArray(){
 openCards = [];
 }
 
@@ -99,14 +94,3 @@ function removeSameCards() {
     card.style.visibility = "hidden";
   });
 }
-
-
-
-
-
-
-
-
-
-
-
