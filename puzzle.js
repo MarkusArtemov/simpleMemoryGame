@@ -56,12 +56,22 @@ function hideCards () {
     }
     removeOpenCards();
     changeTurn();
+    if((firstPlayerPoints+secondPlayerPoints===8)) {gameOverMessage()};
 }
 
 
 function changeTurn(){
     firstPlayerTurn = !firstPlayerTurn;
 }
+
+
+function gameOverMessage(){
+    if(firstPlayerPoints > secondPlayerPoints) alert("firstplayer wins");
+    else if(firstPlayerPoints < secondPlayerPoints) alert("secondplayer wins");
+    else alert("draw");
+}
+
+
 
 
 function checkSamePictures(openCards){
