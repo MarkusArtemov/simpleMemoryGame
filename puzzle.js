@@ -14,7 +14,6 @@ const shuffledImages = _.shuffle(pictureList);
 const cards = document.getElementsByClassName('card');
 let numberOfOpenCards = 0;
 
-
 function startGame(){
 for (let i = 0; i < cards.length; i++) {
    setupCards(i);
@@ -26,15 +25,16 @@ function setupCards(cardIndex){
      cards[cardIndex].style.backgroundImage = "url(" + shuffledImages[cardIndex] + ")";
      cards[cardIndex].classList.add("card-overlay");
       cards[cardIndex].addEventListener("click", function() {
-        if(numberOfOpenCards == 2){
+            if(numberOfOpenCards == 2){
             hideCards();
-        }  
-            openCard(cards[cardIndex]);    
-    });
+        }
+         openCard(cards[cardIndex]);
+        });
 }
 
 function openCard(card){
-    card.style.filter = "brightness(100%)";
+     if (!card.classList.contains("card-overlay")) return;
+    card.classList.remove("card-overlay");
     openCards.push(card);
     numberOfOpenCards++;
 }
@@ -52,11 +52,11 @@ function hideCards () {
             document.querySelector(".secondplayerScore").textContent = "Spieler 2 : "+secondPlayerPoints+ " Punkte";
         }
     } else {
-        changeTurn();
          for(let i = 0; i < cards.length; i++){
-            cards[i].style.filter = "brightness(0%)";
-            
+            cards[i].classList.add("card-overlay");
         }
+        changeTurn();
+        
     }
     removeCardsFromArray();
     if((firstPlayerPoints+secondPlayerPoints===8)) {gameOverMessage()};
@@ -74,7 +74,7 @@ function changeTurn(){
 function gameOverMessage(){
     if(firstPlayerPoints > secondPlayerPoints) document.querySelector("h1").textContent = 'Spieler 1 hat gewonnen';
     else if(firstPlayerPoints < secondPlayerPoints) document.querySelector("h1").textContent = 'Spieler 2 hat gewonnen';
-    else document.querySelector("h1").textContent = 'Unentschieden';;
+    else document.querySelector("h1").textContent = 'Unentschieden';
 }
 
 

@@ -20,7 +20,6 @@ body{
     
 }
 
-
 .gameBoard{
     display: flex;
     gap:10%;
@@ -28,14 +27,20 @@ body{
     align-items: center;
 }
 
-p{
-    width: 200px;
-}
-
 
 .card{
     background-size: cover;
+    filter: brightness(100%);
+    transition: 300ms;
+}
+
+.card-overlay{
     filter: brightness(0%);
+}
+
+
+.card-overlay:active {
+    transform: rotate3d(0, 1, 0, 180deg);
 }
 
 
