@@ -1,4 +1,5 @@
 *{
+    font-family: sans-serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -7,10 +8,30 @@
 body{
     display: flex;
     flex-direction: column;
-    gap: 10vmin;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 }
+
+.score-table{
+    width: 80vmin;
+    display: flex;
+    margin-top: 2rem;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+p {
+    background: rgb(125, 125, 125);
+    color: white;
+    border-radius: 7px;
+    padding: 0.5rem 2rem;
+}
+
+.firstplayerScore{
+    background-color: rgb(41, 43, 182);
+}
+
 
 .memoryBoard{
     display:grid;
@@ -19,14 +40,6 @@ body{
     grid-template-rows: repeat(4,20vmin);
     
 }
-
-.gameBoard{
-    display: flex;
-    gap:10%;
-    justify-content: center;
-    align-items: center;
-}
-
 
 .card{
     background-size: cover;

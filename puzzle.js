@@ -14,6 +14,9 @@ const shuffledImages = _.shuffle(pictureList);
 const cards = document.getElementsByClassName('card');
 let numberOfOpenCards = 0;
 
+const firstPlayerText = document.querySelector('.firstplayerScore');
+const secondPlayerText = document.querySelector('.secondplayerScore');
+
 function startGame(){
 for (let i = 0; i < cards.length; i++) {
    setupCards(i);
@@ -46,10 +49,10 @@ function hideCards () {
         removeSameCards();
         if(firstPlayerTurn){
             firstPlayerPoints++;
-            document.querySelector(".firstplayerScore").textContent = "Spieler 1 : "+firstPlayerPoints+ " Punkte";
+            firstPlayerText.textContent = "Spieler1 | "+firstPlayerPoints+" Punkte";
         } else{
             secondPlayerPoints++;
-            document.querySelector(".secondplayerScore").textContent = "Spieler 2 : "+secondPlayerPoints+ " Punkte";
+            secondPlayerText.textContent = "Spieler2 | "+secondPlayerPoints+" Punkte";
         }
     } else {
          for(let i = 0; i < cards.length; i++){
@@ -59,26 +62,19 @@ function hideCards () {
         
     }
     removeCardsFromArray();
-    if((firstPlayerPoints+secondPlayerPoints===8)) {gameOverMessage()};
 }
 
 
 function changeTurn(){
     firstPlayerTurn = !firstPlayerTurn;
-    if(firstPlayerTurn)document.querySelector("h1").textContent = 'Zug von Spieler 1';
-    else document.querySelector("h1").textContent = 'Zug von Spieler 2';
+    if(firstPlayerTurn) {
+        firstPlayerText.style.backgroundColor = 'rgb(41, 43, 182)';
+        secondPlayerText.style.backgroundColor = 'rgb(125, 125, 125)';
+    } else{
+        secondPlayerText.style.backgroundColor = 'rgb(41, 43, 182)';
+        firstPlayerText.style.backgroundColor = 'rgb(125, 125, 125)';
+    }
 }
-
-
-
-function gameOverMessage(){
-    if(firstPlayerPoints > secondPlayerPoints) document.querySelector("h1").textContent = 'Spieler 1 hat gewonnen';
-    else if(firstPlayerPoints < secondPlayerPoints) document.querySelector("h1").textContent = 'Spieler 2 hat gewonnen';
-    else document.querySelector("h1").textContent = 'Unentschieden';
-}
-
-
-
 
 function checkSamePictures(openCards){
     return ((openCards[0].style.backgroundImage === openCards[1].style.backgroundImage) && 
