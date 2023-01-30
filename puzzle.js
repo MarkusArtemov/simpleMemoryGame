@@ -25,14 +25,16 @@ for (let i = 0; i < cards.length; i++) {
 startGame();
 
 function setupCards(cardIndex){
-     cards[cardIndex].style.backgroundImage = "url(" + shuffledImages[cardIndex] + ")";
-     cards[cardIndex].classList.add("card-overlay");
-      cards[cardIndex].addEventListener("click", function() {
-            if(numberOfOpenCards == 2){
-            hideCards();
-        }
-         openCard(cards[cardIndex]);
-        });
+  let image = shuffledImages[cardIndex];
+  let card = cards[cardIndex];
+  card.style.backgroundImage = "url(" + image + ")";
+  card.classList.add("card-overlay");
+  card.addEventListener("click", function() {
+    if (numberOfOpenCards === 2) {
+      hideCards();
+    }
+    openCard(card);
+  });
 }
 
 function openCard(card){
@@ -47,33 +49,34 @@ function hideCards () {
     numberOfOpenCards = 0;
     if(checkSamePictures(openCards)){
         removeSameCards();
-        if(firstPlayerTurn){
-            firstPlayerPoints++;
-            firstPlayerText.textContent = "Spieler1 | "+firstPlayerPoints+" Punkte";
-        } else{
-            secondPlayerPoints++;
-            secondPlayerText.textContent = "Spieler2 | "+secondPlayerPoints+" Punkte";
-        }
+        updatePlayerPoints(firstPlayerTurn, targetPlayerText());
     } else {
-         for(let i = 0; i < cards.length; i++){
-            cards[i].classList.add("card-overlay");
-        }
-        changeTurn();
-        
+         for (const card of cards) {
+        card.classList.add("card-overlay");
+    }
+        changeTurn();  
     }
     removeCardsFromArray();
 }
 
 
+function targetPlayerText(){
+    return firstPlayerTurn ? firstPlayerText : secondPlayerText;
+}
+
+
+function updatePlayerPoints(firstPlayerTurn, targetPlayerText) {
+  let playerPoints = firstPlayerTurn ? ++firstPlayerPoints : ++secondPlayerPoints;
+  targetPlayerText.textContent = "Spieler" + (firstPlayerTurn ? 1 : 2) + " | " + playerPoints + " Punkte";
+}
+
+
 function changeTurn(){
     firstPlayerTurn = !firstPlayerTurn;
-    if(firstPlayerTurn) {
-        firstPlayerText.style.backgroundColor = 'rgb(41, 43, 182)';
-        secondPlayerText.style.backgroundColor = 'rgb(125, 125, 125)';
-    } else{
-        secondPlayerText.style.backgroundColor = 'rgb(41, 43, 182)';
-        firstPlayerText.style.backgroundColor = 'rgb(125, 125, 125)';
-    }
+    const activePlayerText = firstPlayerTurn ? firstPlayerText : secondPlayerText;
+    const inactivePlayerText = firstPlayerTurn ? secondPlayerText : firstPlayerText;
+    activePlayerText.style.backgroundColor = 'rgb(41, 43, 182)';
+    inactivePlayerText.style.backgroundColor = 'rgb(125, 125, 125)';
 }
 
 function checkSamePictures(openCards){
