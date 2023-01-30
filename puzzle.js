@@ -10,23 +10,25 @@ let firstPlayerTurn = true;
 let firstPlayerPoints = 0;
 let secondPlayerPoints = 0;
 
-const shuffledImages = _.shuffle(pictureList);
+
 const cards = document.getElementsByClassName('card');
 let numberOfOpenCards = 0;
 
 const firstPlayerText = document.querySelector('.firstplayerScore');
 const secondPlayerText = document.querySelector('.secondplayerScore');
 
+const restartButton = document.querySelector('.restartButton');
+const popupContainer = document.querySelector('.popup-container');
+
 function startGame(){
+  const shuffledImages = _.shuffle(pictureList);
 for (let i = 0; i < cards.length; i++) {
-   setupCards(i);
+   setupCards(cards[i],shuffledImages[i]);
 }
 }
 startGame();
 
-function setupCards(cardIndex){
-  let image = shuffledImages[cardIndex];
-  let card = cards[cardIndex];
+function setupCards(card,image){
   card.style.backgroundImage = "url(" + image + ")";
   card.classList.add("card-overlay");
   card.addEventListener("click", function() {
@@ -35,6 +37,21 @@ function setupCards(cardIndex){
     }
     openCard(card);
   });
+}
+
+function showPopup(){
+popupContainer.classList.add("setVisible");
+let winningMessage = checkWhoWins();
+document.querySelector('.winning-message').textContent = winningMessage;
+restartButton.addEventListener("click",function(){
+ location.reload();
+});
+}
+
+function checkWhoWins(){
+  return firstPlayerPoints > secondPlayerPoints ? 
+  "Spieler 1 hat gewonnen" : firstPlayerPoints < secondPlayerPoints ?
+   "Spieler 2 hat gewonnen" : "Unentschieden";
 }
 
 function openCard(card){
@@ -50,6 +67,9 @@ function hideCards () {
     if(checkSamePictures(openCards)){
         removeSameCards();
         updatePlayerPoints(firstPlayerTurn, targetPlayerText());
+        if(firstPlayerPoints+secondPlayerPoints === 8){
+            showPopup();
+        }
     } else {
          for (const card of cards) {
         card.classList.add("card-overlay");
@@ -58,7 +78,6 @@ function hideCards () {
     }
     removeCardsFromArray();
 }
-
 
 function targetPlayerText(){
     return firstPlayerTurn ? firstPlayerText : secondPlayerText;
@@ -93,3 +112,5 @@ function removeSameCards() {
     card.style.visibility = "hidden";
   });
 }
+
+

@@ -21,14 +21,14 @@ body{
     flex-wrap: wrap;
 }
 
-p {
+.score-table p {
     background: rgb(125, 125, 125);
     color: white;
     border-radius: 7px;
     padding: 0.5rem 2rem;
 }
 
-.firstplayerScore{
+.score-table .firstplayerScore{
     background-color: rgb(41, 43, 182);
 }
 
