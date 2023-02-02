@@ -41,14 +41,13 @@ function setupCards(card,image){
 
 function showPopup(){
 popupContainer.classList.add("setVisible");
-let winningMessage = checkWhoWins();
-document.querySelector('.winning-message').textContent = winningMessage;
+document.querySelector('.winning-message').textContent = getWinningMessage();
 restartButton.addEventListener("click",function(){
  location.reload();
 });
 }
 
-function checkWhoWins(){
+function getWinningMessage(){
   return firstPlayerPoints > secondPlayerPoints ? 
   "Spieler 1 hat gewonnen" : firstPlayerPoints < secondPlayerPoints ?
    "Spieler 2 hat gewonnen" : "Unentschieden";
